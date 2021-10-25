@@ -12,7 +12,7 @@ namespace Items
 
         public int Quality { get; set; }
 
-        public virtual void Update()
+        public void Update()
         {
             UpdateQuality();
 
