@@ -2,10 +2,10 @@
 
 namespace GildedRose.Console
 {
-    class Program
+    public class Program
     {
-        IList<Item> Items;
-        static void Main(string[] args)
+        public IList<Item> Items;
+        public static void Main(string[] args)
         {
             System.Console.WriteLine("OMGHAI!");
 
@@ -38,6 +38,7 @@ namespace GildedRose.Console
         {
             for (var i = 0; i < Items.Count; i++)
             {
+                // Generic quality update
                 if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
                 {
                     if (Items[i].Quality > 0)
@@ -48,12 +49,15 @@ namespace GildedRose.Console
                         }
                     }
                 }
+                // Brie and Backstage pass quality update
                 else
                 {
                     if (Items[i].Quality < 50)
                     {
+                        // Brie and backstage quality update
                         Items[i].Quality = Items[i].Quality + 1;
 
+                        // Backstage pass
                         if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
                         {
                             if (Items[i].SellIn < 11)
@@ -75,15 +79,19 @@ namespace GildedRose.Console
                     }
                 }
 
+                // Generic SellIn update
                 if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
                 {
                     Items[i].SellIn = Items[i].SellIn - 1;
                 }
 
+                // Everything but Sulfuras
                 if (Items[i].SellIn < 0)
                 {
+                    // Everything but Aged Brie
                     if (Items[i].Name != "Aged Brie")
                     {
+                        // Generics quality update
                         if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
                         {
                             if (Items[i].Quality > 0)
@@ -94,11 +102,14 @@ namespace GildedRose.Console
                                 }
                             }
                         }
+                        // Backstage pass quality update
                         else
                         {
                             Items[i].Quality = Items[i].Quality - Items[i].Quality;
                         }
                     }
+                    
+                    // Aged Brie quality update
                     else
                     {
                         if (Items[i].Quality < 50)
