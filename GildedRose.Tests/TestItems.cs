@@ -1,19 +1,12 @@
 using Xunit;
 using System.Collections.Generic;
 using Items;
-using GildedRose.Console;
+using GildedRose;
 
 namespace GildedRose.Tests
 {
     public class TestItems
     {
-        Program _TestProgram;
-
-        public TestItems()
-        {
-            _TestProgram = new Program();
-        }
-
         [Fact]
         public void Test_Item_Getters()
         {

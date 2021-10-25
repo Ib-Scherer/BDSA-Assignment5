@@ -1,7 +1,8 @@
 ﻿using Xunit;
-using System.Collections.Generic;
 using Items;
-using GildedRose.Console;
+using System.Collections.Generic;
+
+using GildedRose;
 
 namespace GildedRose.Tests
 {
@@ -15,9 +16,9 @@ namespace GildedRose.Tests
                 Items = new List<Item>
                 {
                     new Item {Name = "Generic Item", SellIn = 5, Quality = 20},
-                    new Item {Name = "Aged Brie", SellIn = 2, Quality = 0},
-                    new Item {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
-                    new Item {Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 11, Quality = 5}
+                    new Brie {Name = "Aged Brie", SellIn = 2, Quality = 0},
+                    new Sulfuras {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
+                    new BackstagePass {Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 11, Quality = 5}
                 }
             };
         }
@@ -31,7 +32,7 @@ namespace GildedRose.Tests
             var oldSellIn = item.SellIn;
 
             // Act
-            _testSet.UpdateQuality();
+            Program.UpdateInventory(_testSet.Items);
             var expectedQuality = oldQuality; 
             var expectedSellIn = oldSellIn;
 
@@ -49,7 +50,7 @@ namespace GildedRose.Tests
             var oldSellIn = item.SellIn;
 
             // Act
-            _testSet.UpdateQuality();
+            Program.UpdateInventory(_testSet.Items);
             var expectedQuality = oldQuality + 1;
             var expectedSellIn = oldSellIn - 1;
 
@@ -67,7 +68,7 @@ namespace GildedRose.Tests
             var oldSellIn = item.SellIn;
 
             // Actual
-            _testSet.UpdateQuality();
+            Program.UpdateInventory(_testSet.Items);
             var expectedQuality = OldQuality + 1;
             var expectedSellIn = oldSellIn - 1;
 
@@ -83,13 +84,13 @@ namespace GildedRose.Tests
             var item = _testSet.Items[3];
             while (item.SellIn > 10)
             {
-                _testSet.UpdateQuality();
+                Program.UpdateInventory(_testSet.Items);
             }
             var OldQuality = item.Quality;
             var oldSellIn = item.SellIn;
 
             // Actual
-            _testSet.UpdateQuality();
+            Program.UpdateInventory(_testSet.Items);
             var expectedQuality = OldQuality + 2;
             var expectedSellIn = oldSellIn - 1;
 
@@ -105,15 +106,15 @@ namespace GildedRose.Tests
             var item = _testSet.Items[3];
             while (item.SellIn > 5)
             {
-                _testSet.UpdateQuality();
+                Program.UpdateInventory(_testSet.Items);
             }
             var OldQuality = item.Quality;
-            var oldSellIn = item.SellIn;
+            var OldSellIn = item.SellIn;
 
             // Actual
-            _testSet.UpdateQuality();
+            Program.UpdateInventory(_testSet.Items);
             var expectedQuality = OldQuality + 3;
-            var expectedSellIn = oldSellIn - 1;
+            var expectedSellIn = OldSellIn - 1;
 
             // Assert
             Assert.Equal(expectedQuality, item.Quality);
@@ -127,13 +128,13 @@ namespace GildedRose.Tests
             var item = _testSet.Items[3];
             while (item.SellIn > 0)
             {
-                _testSet.UpdateQuality();
+                Program.UpdateInventory(_testSet.Items);
             }
             var OldQuality = item.Quality;
             var oldSellIn = item.SellIn;
 
             // Actual
-            _testSet.UpdateQuality();
+            Program.UpdateInventory(_testSet.Items);
             var expectedQuality = 0;
             var expectedSellIn = oldSellIn - 1;
 
@@ -151,7 +152,7 @@ namespace GildedRose.Tests
             var oldSellIn = item.SellIn;
 
             //When
-            _testSet.UpdateQuality();
+            Program.UpdateInventory(_testSet.Items);
             var expectedQuality = oldQuality - 1;
             var expectedSellIn = oldSellIn - 1; 
 
@@ -168,13 +169,13 @@ namespace GildedRose.Tests
             var item = _testSet.Items[0];
             while (item.SellIn > -1)
             {
-                _testSet.UpdateQuality();
+                Program.UpdateInventory(_testSet.Items);
             }
             var OldQuality = item.Quality;
             var oldSellIn = item.SellIn;
 
             // Actual
-            _testSet.UpdateQuality();
+            Program.UpdateInventory(_testSet.Items);
             var expectedQuality = OldQuality - 2;
             var expectedSellIn = oldSellIn - 1;
 
@@ -190,13 +191,13 @@ namespace GildedRose.Tests
             var item = _testSet.Items[1];
             while (item.Quality != 50)
             {
-                _testSet.UpdateQuality();
+                Program.UpdateInventory(_testSet.Items);
             }
             var OldQuality = item.Quality;
             var oldSellIn = item.SellIn;
 
             // Actual
-            _testSet.UpdateQuality();
+            Program.UpdateInventory(_testSet.Items);
             var expectedQuality = OldQuality;
             var expectedSellIn = oldSellIn - 1;
 
@@ -212,13 +213,13 @@ namespace GildedRose.Tests
             var item = _testSet.Items[0];
             while (item.Quality != 0)
             {
-                _testSet.UpdateQuality();
+                Program.UpdateInventory(_testSet.Items);
             }
             var OldQuality = item.Quality;
             var oldSellIn = item.SellIn;
 
             // Actual
-            _testSet.UpdateQuality();
+            Program.UpdateInventory(_testSet.Items);
             var expectedQuality = OldQuality;
             var expectedSellIn = oldSellIn - 1;
 
