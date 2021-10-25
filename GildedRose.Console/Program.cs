@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Items;
-
-namespace GildedRose.Console
+namespace GildedRose
 {
     public class Program
     {
@@ -11,116 +11,59 @@ namespace GildedRose.Console
             System.Console.WriteLine("OMGHAI!");
 
             var app = new Program()
-                          {
-                              Items = new List<Item>
+            {
+                Items = new List<Item>
                                           {
-                                              new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
-                                              new Item {Name = "Aged Brie", SellIn = 2, Quality = 0},
-                                              new Item {Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7},
-                                              new Item {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
-                                              new Item
-                                                  {
-                                                      Name = "Backstage passes to a TAFKAL80ETC concert",
-                                                      SellIn = 15,
-                                                      Quality = 20
-                                                  },
-                                              new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
+                new Item { Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20 },
+                new Brie { Name = "Aged Brie", SellIn = 2, Quality = 0 },
+                new Item { Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7 },
+                new Sulfuras { Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80 },
+                new Sulfuras { Name = "Sulfuras, Hand of Ragnaros", SellIn = -1, Quality = 80 },
+                new BackstagePass
+                {
+                    Name = "Backstage passes to a TAFKAL80ETC concert",
+                    SellIn = 15,
+                    Quality = 20
+                },
+                new BackstagePass
+                {
+                    Name = "Backstage passes to a TAFKAL80ETC concert",
+                    SellIn = 10,
+                    Quality = 49
+                },
+                new BackstagePass
+                {
+                    Name = "Backstage passes to a TAFKAL80ETC concert",
+                    SellIn = 5,
+                    Quality = 49
+                },
+				// this conjured item does not work properly yet
+				new Item { Name = "Conjured Mana Cake", SellIn = 3, Quality = 6, Conjured = true }
                                           }
 
-                          };
+            };
 
-            app.UpdateQuality();
-
-            System.Console.ReadKey();
+            for (var i = 0; i < 31; i++)
+            {
+                Console.WriteLine("-------- day " + i + " --------");
+                Console.WriteLine("name, sellIn, quality");
+                for (var j = 0; j < app.Items.Count; j++)
+                {
+                    Console.WriteLine(app.Items[j].Name + ", " + app.Items[j].SellIn + ", " + app.Items[j].Quality);
+                }
+                Console.WriteLine("");
+                
+                UpdateInventory(app.Items);
+            }
 
         }
 
-        public void UpdateQuality()
+        public static void UpdateInventory(IList<Item> Items)
         {
-            for (var i = 0; i < Items.Count; i++)
-            {
-                // Generic quality update
-                if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                foreach (Item item  in Items)
                 {
-                    if (Items[i].Quality > 0)
-                    {
-                        if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                        {
-                            Items[i].Quality = Items[i].Quality - 1;
-                        }
-                    }
+                    item.Update();
                 }
-                // Brie and Backstage pass quality update
-                else
-                {
-                    if (Items[i].Quality < 50)
-                    {
-                        // Brie and backstage quality update
-                        Items[i].Quality = Items[i].Quality + 1;
-
-                        // Backstage pass
-                        if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                        {
-                            if (Items[i].SellIn < 11)
-                            {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
-                            }
-
-                            if (Items[i].SellIn < 6)
-                            {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                // Generic SellIn update
-                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                {
-                    Items[i].SellIn = Items[i].SellIn - 1;
-                }
-
-                // Everything but Sulfuras
-                if (Items[i].SellIn < 0)
-                {
-                    // Everything but Aged Brie
-                    if (Items[i].Name != "Aged Brie")
-                    {
-                        // Generics quality update
-                        if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
-                        {
-                            if (Items[i].Quality > 0)
-                            {
-                                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                                {
-                                    Items[i].Quality = Items[i].Quality - 1;
-                                }
-                            }
-                        }
-                        // Backstage pass quality update
-                        else
-                        {
-                            Items[i].Quality = Items[i].Quality - Items[i].Quality;
-                        }
-                    }
-                    
-                    // Aged Brie quality update
-                    else
-                    {
-                        if (Items[i].Quality < 50)
-                        {
-                            Items[i].Quality = Items[i].Quality + 1;
-                        }
-                    }
-                }
-            }
         }
     }
-}    
-
+}
