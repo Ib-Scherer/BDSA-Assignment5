@@ -23,17 +23,21 @@ namespace GildedRose.Tests
         }
 
         [Fact]
-        public void Sulfuras_quality_does_not_decrement()
+        public void Sulfuras_does_not_decrement()
         {
             // Arrange
-            var expected = _testSet.Items[2].Quality;
+            var item = _testSet.Items[2];
+            var oldQuality = item.Quality;
+            var oldSellIn = item.SellIn;
 
             // Act
             _testSet.UpdateQuality();
-            var actual = _testSet.Items[2].Quality;
+            var expectedQuality = oldQuality; 
+            var expectedSellIn = oldSellIn;
 
             // Assert
-            Assert.Equal(expected, actual);
+            Assert.Equal(expectedQuality, item.Quality);
+            Assert.Equal(expectedSellIn, item.SellIn);
         }
 
         [Fact]
@@ -50,8 +54,8 @@ namespace GildedRose.Tests
             var expectedSellIn = oldSellIn - 1;
 
             // Assert
-            Assert.Equal(expectedQuality, item.SellIn);
-            Assert.Equal(expectedSellIn, item.Quality);
+            Assert.Equal(expectedQuality, item.Quality);
+            Assert.Equal(expectedSellIn, item.SellIn);
         }
 
         [Fact]
