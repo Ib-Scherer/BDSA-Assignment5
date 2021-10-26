@@ -2,9 +2,9 @@
 
 namespace Items
 {
-    public class Item
+    public abstract class Item
     {
-        public bool Conjured { get; set; } = false;
+        public bool Conjured { get; set; }
 
         public string Name { get; set; }
 
@@ -22,18 +22,22 @@ namespace Items
             UpdateSellIn();
         }
 
-        public virtual void UpdateQuality()
+        public abstract void UpdateQuality();
+        public virtual void UpdateSellIn()
+        {
+            SellIn--;
+        }
+    }
+
+    public class GenericItem : Item
+    {
+        public override void UpdateQuality()
         {
             if (SellIn < 0 && Quality > 1)
                 Quality -= 2;
             else if (Quality > 0)
                 Quality--;
-        }
-
-        public virtual void UpdateSellIn()
-        {
-            SellIn--;
-        }
+        }   
     }
 
     public class Brie : Item
